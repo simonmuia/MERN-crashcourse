@@ -23,7 +23,7 @@ mongoose.connect(connection);
 
 app.listen(port, () => {
   console.log('SERVER STARTED');
-});
+}); 
 
 // initiate initial url
 app.get('/', (req, res) => {
