@@ -12,6 +12,9 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
+// change inserted data to json
+app.use(express.json());
+
 // import mongoose
 const mongoose = require('mongoose');
 
@@ -23,7 +26,7 @@ mongoose.connect(connection);
 
 app.listen(port, () => {
   console.log('SERVER STARTED');
-}); 
+});
 
 // initiate initial url
 app.get('/', (req, res) => {
@@ -40,4 +43,14 @@ app.get('/getUsers', async (req, res) => {
 });
 
 // // initiate post request
-// app.post();
+app.post('/createUser', async (req, res) => {
+  // fetch data from frontend
+  const user = await req.body;
+  // define user model;
+  const newUser = new UsersModel(user);
+  // insert user to mongodb
+  await newUser.save();
+
+  // confirm the inserted data
+  res.json(user);
+});
